@@ -2,10 +2,9 @@ package com.afeka.scrummaster.logic;
 
 import android.content.Context;
 
-import com.afeka.scrummaster.ResponseListener;
+import com.afeka.scrummaster.interfaces.ResponseListener;
 import com.afeka.scrummaster.layout.CreateUser;
 import com.afeka.scrummaster.layout.User;
-import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;

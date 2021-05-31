@@ -1,27 +1,19 @@
 package com.afeka.scrummaster.data;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
-public class Team {
-    private String teamId;
+public class Team implements Serializable {
     private String name;
     private List<String> members;
 
     public Team() {
     }
 
-    public Team(String teamId, String name, List<String> members) {
-        this.teamId = teamId;
+    public Team(String name, List<String> members) {
         this.name = name;
         this.members = members;
-    }
-
-    public String getTeamId() {
-        return teamId;
-    }
-
-    public void setTeamId(String teamId) {
-        this.teamId = teamId;
     }
 
     public String getName() {
@@ -40,10 +32,16 @@ public class Team {
         this.members = members;
     }
 
+    public void addMember(String userId) {
+        if (this.members == null) {
+            this.members = new ArrayList<>();
+        }
+        this.members.add(userId);
+    }
+
     @Override
     public String toString() {
         return "Team{" +
-                "teamId='" + teamId + '\'' +
                 ", name='" + name + '\'' +
                 ", members=" + members +
                 '}';

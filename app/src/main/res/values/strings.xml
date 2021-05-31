@@ -23,4 +23,6 @@
     <string name="review">Review</string>
     <string name="done">Done</string>
     <string name="backlog">Backlog</string>
+    <string name="available_teams">Available Teams</string>
+    <string name="my_teams">My Teams</string>
 </resources>

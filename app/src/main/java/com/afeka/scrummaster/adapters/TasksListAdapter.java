@@ -1,8 +1,9 @@
-package com.afeka.scrummaster;
+package com.afeka.scrummaster.adapters;
 
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,7 +42,11 @@ public class TasksListAdapter extends RecyclerView.Adapter<TasksListAdapter.View
         holder.mItem = mValues.get(position);
         holder.mIdView.setText(mValues.get(position).getName());
         holder.mContentView.setText(mValues.get(position).getDescription());
-        holder.mWrapperView.setBackgroundColor(Color.parseColor(TASK_STATUS_HEX_COLORS[mValues.get(position).getTaskStatus().ordinal()]));
+        GradientDrawable border = new GradientDrawable();
+        border.setColor(Color.parseColor(TASK_STATUS_HEX_COLORS[mValues.get(position).getTaskStatus().ordinal()]));
+        border.setStroke(1, 0xFFCCCCCC);
+        holder.mWrapperView.setBackground(border);
+//        holder.mWrapperView.setBackgroundColor(Color.parseColor(TASK_STATUS_HEX_COLORS[mValues.get(position).getTaskStatus().ordinal()]));
         holder.bindListener(listener, mValues.get(position));
     }
 

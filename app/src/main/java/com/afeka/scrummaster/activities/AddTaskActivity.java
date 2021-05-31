@@ -1,4 +1,4 @@
-package com.afeka.scrummaster;
+package com.afeka.scrummaster.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -12,6 +12,8 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
+import com.afeka.scrummaster.R;
+import com.afeka.scrummaster.interfaces.ResponseListener;
 import com.afeka.scrummaster.layout.Task;
 import com.afeka.scrummaster.layout.TaskStatus;
 import com.afeka.scrummaster.logic.TaskService;
@@ -30,6 +32,7 @@ public class AddTaskActivity extends AppCompatActivity {
     private Button addTaskButton;
     private Context self;
     private Handler handler;
+    private String teamId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +41,7 @@ public class AddTaskActivity extends AppCompatActivity {
 
         this.self = this;
         this.handler = new Handler();
+        teamId = getIntent().getStringExtra("teamId");
 
         getSupportActionBar().setTitle("Add Task");
 
@@ -79,7 +83,7 @@ public class AddTaskActivity extends AppCompatActivity {
                                     UserService.getInstance(self).currentUser().getEmail(),
                                     name,
                                     description,
-                                    "Scrum Master",
+                                    teamId,
                                     new Date(),
                                     taskStatus,
                                     null

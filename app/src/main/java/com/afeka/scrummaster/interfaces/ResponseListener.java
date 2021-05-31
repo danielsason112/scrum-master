@@ -1,4 +1,4 @@
-package com.afeka.scrummaster;
+package com.afeka.scrummaster.interfaces;
 
 public interface ResponseListener<T> {
     public void onRes(T res);

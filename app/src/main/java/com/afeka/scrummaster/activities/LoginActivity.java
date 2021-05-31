@@ -1,15 +1,17 @@
-package com.afeka.scrummaster;
+package com.afeka.scrummaster.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.afeka.scrummaster.R;
+import com.afeka.scrummaster.interfaces.ResponseListener;
 import com.afeka.scrummaster.layout.CreateUser;
 import com.afeka.scrummaster.layout.User;
 import com.afeka.scrummaster.logic.UserService;
@@ -29,6 +31,7 @@ public class LoginActivity extends AppCompatActivity {
     private Button registerButton;
     private UserService userService;
     private Context self;
+    private Handler handler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +39,8 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_start);
         userService = UserService.getInstance(this);
         self = this;
+        this.handler = new Handler();
+
     }
 
     @Override
@@ -61,8 +66,12 @@ public class LoginActivity extends AppCompatActivity {
                         public void onRes(User res) {
                             Log.e("login", "SUCCESS");
                             Log.e("login", userService.currentUser().toString());
-                            Intent intent = new Intent(self, BoardActivity.class);
-                            startActivity(intent);
+                            handler.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    finish();
+                                }
+                            });
                         }
 
                         @Override
@@ -109,6 +118,12 @@ public class LoginActivity extends AppCompatActivity {
                         public void onRes(User res) {
                             Log.e("register", "SUCCESS");
                             Log.e("register", userService.currentUser().toString());
+                            handler.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    finish();
+                                }
+                            });
                         }
 
                         @Override

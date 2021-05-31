@@ -2,9 +2,9 @@ package com.afeka.scrummaster.logic;
 
 import android.content.Context;
 
-import com.afeka.scrummaster.ResponseListener;
+import com.afeka.scrummaster.interfaces.ResponseListener;
 import com.afeka.scrummaster.layout.Task;
-import com.afeka.scrummaster.layout.User;
+import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -27,7 +27,6 @@ public class TaskService {
     private static TaskService instance;
     private RequestQueue requestQueue;
     private static Context ctx;
-    private static User currentUser = null;
 
     private TaskService(Context context) {
         ctx = context;
@@ -46,10 +45,6 @@ public class TaskService {
             requestQueue = Volley.newRequestQueue(ctx.getApplicationContext());
         }
         return requestQueue;
-    }
-
-    public User currentUser() {
-        return currentUser;
     }
 
     public void findAll(ResponseListener<List<Task>> listener) {
@@ -76,7 +71,29 @@ public class TaskService {
         getRequestQueue().add(request);
     }
 
-
+    public void findByTeam(String teamId, ResponseListener<List<Task>> listener) {
+        JsonArrayRequest request = new JsonArrayRequest(
+                BASE_URL + "/team/" + teamId,
+                new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        try {
+                            List<Task> tasks = toTaskList(response);
+                            listener.onRes(tasks);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        listener.onError(error);
+                    }
+                }
+        );
+        getRequestQueue().add(request);
+    }
 
     private Task toTask(JSONObject object) throws IOException {
         return new ObjectMapper().readValue(object.toString(), Task.class);
@@ -93,6 +110,32 @@ public class TaskService {
     public void createTask(Task task, ResponseListener<Task> listener) throws IOException, JSONException {
         JsonObjectRequest request = new JsonObjectRequest(
                 BASE_URL,
+                new JSONObject(new ObjectMapper().writeValueAsString(task)),
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            Task t = toTask(response);
+                            listener.onRes(t);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        listener.onError(error);
+                    }
+                }
+        );
+        getRequestQueue().add(request);
+    }
+
+    public void updateTask(Task task, ResponseListener<Task> listener) throws IOException, JSONException {
+        JsonObjectRequest request = new JsonObjectRequest(
+                Request.Method.PUT,
+                BASE_URL + "/" + task.getTaskId(),
                 new JSONObject(new ObjectMapper().writeValueAsString(task)),
                 new Response.Listener<JSONObject>() {
                     @Override

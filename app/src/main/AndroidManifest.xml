@@ -13,16 +13,19 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ScrumMaster"
         android:usesCleartextTraffic="true">
-        <activity android:name=".AddTaskActivity"></activity>
-        <activity android:name=".TaskDetailsActivity" />
-        <activity android:name=".BoardActivity" />
-        <activity android:name=".LoginActivity">
+        <activity android:name=".activities.TeamDetailsActivity"></activity>
+        <activity android:name=".activities.AddTeamActivity" />
+        <activity android:name=".activities.TeamActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".activities.AddTaskActivity" />
+        <activity android:name=".activities.TaskDetailsActivity" />
+        <activity android:name=".activities.BoardActivity" />
+        <activity android:name=".activities.LoginActivity" />
     </application>
 
 </manifest>

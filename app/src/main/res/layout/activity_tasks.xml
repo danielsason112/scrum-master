@@ -2,11 +2,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".TasksListActivity" >
+    tools:context="com.afeka.scrummaster.activities.BoardActivity" >
 
     <fragment
         android:id="@+id/fragment1"
-        android:name="com.afeka.scrummaster.TasksListFragment"
+        android:name="com.afeka.scrummaster.fragments.TasksListFragment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"

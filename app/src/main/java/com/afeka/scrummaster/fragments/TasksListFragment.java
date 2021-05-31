@@ -1,4 +1,4 @@
-package com.afeka.scrummaster;
+package com.afeka.scrummaster.fragments;
 
 import android.content.Context;
 import android.content.Intent;
@@ -13,6 +13,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.afeka.scrummaster.R;
+import com.afeka.scrummaster.activities.TaskDetailsActivity;
+import com.afeka.scrummaster.adapters.TasksListAdapter;
 import com.afeka.scrummaster.layout.Task;
 
 import java.util.ArrayList;
@@ -65,7 +68,7 @@ public class TasksListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_item_list, container, false);
+        View view = inflater.inflate(R.layout.fragment_team_list, container, false);
 
         // Set the adapter
         if (view instanceof RecyclerView) {
