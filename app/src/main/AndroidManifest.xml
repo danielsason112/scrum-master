@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.afeka.scrummaster">
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -11,21 +12,20 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.ScrumMaster"
-        android:usesCleartextTraffic="true">
-        <activity android:name=".activities.TeamDetailsActivity"></activity>
-        <activity android:name=".activities.AddTeamActivity" />
-        <activity android:name=".activities.TeamActivity">
+        android:theme="@style/Theme.Shrine"
+        android:usesCleartextTraffic="true"
+        tools:targetApi="m">
+        <activity android:name=".ui.activities.TaskDetailActivity" />
+        <activity android:name=".ui.activities.NewTeamActivity" />
+        <activity android:name=".ui.activities.NewTaskActivity" />
+        <activity android:name=".ui.activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activities.AddTaskActivity" />
-        <activity android:name=".activities.TaskDetailsActivity" />
-        <activity android:name=".activities.BoardActivity" />
-        <activity android:name=".activities.LoginActivity" />
+        <activity android:name=".ui.activities.AuthActivity" />
     </application>
 
 </manifest>
