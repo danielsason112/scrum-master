@@ -25,4 +25,33 @@
     <string name="backlog">Backlog</string>
     <string name="available_teams">Available Teams</string>
     <string name="my_teams">My Teams</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="button_next">Next</string>
+    <string name="hint_password">password</string>
+    <string name="hint_username">email</string>
+    <string name="error_email">Please enter a valid email</string>
+    <string name="password_error">Password must be 6 characters or more</string>
+    <string name="button_sign_up">Sign Up</string>
+    <string name="hint_firstname">First Name</string>
+    <string name="hint_lastname">Last Name</string>
+    <string name="hint_avatar">Avatar URL</string>
+    <string name="join_button">Join</string>
+    <string name="to_board_button">To Board</string>
+    <string name="add_team">Create</string>
+    <string name="create_team_title">Create Team</string>
+    <string name="hint_team_name">Team Name</string>
+    <string name="create_button">Create</string>
+    <string name="hint_task_name">Task Name</string>
+    <string name="hint_task_description">Description</string>
+    <string name="create_task_title">Create Task</string>
+    <string name="logout">Logout</string>
+    <string name="details_name_label">Name:</string>
+    <string name="details_description_label">Description:</string>
+    <string name="details_status_label">Status:</string>
+    <string name="details_creator_label">Creator:</string>
+    <string name="details_created_label">Created At:</string>
+    <string name="edit_task">Edit</string>
+    <string name="edit_task_title">Edit Task</string>
+    <string name="done_button">Done</string>
 </resources>

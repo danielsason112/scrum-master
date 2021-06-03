@@ -5,6 +5,7 @@ import android.content.Context;
 import com.afeka.scrummaster.interfaces.ResponseListener;
 import com.afeka.scrummaster.layout.CreateUser;
 import com.afeka.scrummaster.layout.User;
+import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -56,12 +57,26 @@ public class UserService {
         JsonArrayRequest request = new JsonArrayRequest(
                 BASE_URL,
                 new UserListResponseListener(listener),
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        listener.onError(error);
+                error -> listener.onError(error)
+        );
+        getRequestQueue().add(request);
+    }
+
+    public void getUserById(String email, ResponseListener<User> listener) throws JSONException {
+        JsonObjectRequest request = new JsonObjectRequest(
+                BASE_URL + "/" + email,
+                null,
+                response -> {
+                    try {
+                        User user = toUser(response);
+                        currentUser = user;
+                        listener.onRes(user);
+                    } catch (IOException e) {
+                        listener.onError(e);
                     }
-            }
+
+                },
+                error -> listener.onError(error)
         );
         getRequestQueue().add(request);
     }
@@ -70,23 +85,17 @@ public class UserService {
         JsonObjectRequest request = new JsonObjectRequest(
                 BASE_URL + "/login",
                 new JSONObject().put("email", email).put("password", password),
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        try {
-                            User user = toUser(response);
-                            currentUser = user;
-                            listener.onRes(user);
-                        } catch (IOException e) {
-                            listener.onError(e);
-                        }
-
+                response -> {
+                    try {
+                        User user = toUser(response);
+                        currentUser = user;
+                        listener.onRes(user);
+                    } catch (IOException e) {
+                        listener.onError(e);
                     }
+
                 },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) { listener.onError(error); }
-                }
+                error -> listener.onError(error)
         );
         getRequestQueue().add(request);
     }
@@ -107,43 +116,22 @@ public class UserService {
         JsonObjectRequest request = new JsonObjectRequest(
                 BASE_URL,
                 new JSONObject(new ObjectMapper().writeValueAsString(createUser)),
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        try {
-                            User user = toUser(response);
-                            currentUser = user;
-                            listener.onRes(user);
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
+                response -> {
+                    try {
+                        User user = toUser(response);
+                        currentUser = user;
+                        listener.onRes(user);
+                    } catch (IOException e) {
+                        e.printStackTrace();
                     }
                 },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        listener.onError(error);
-                    }
-                }
+                error -> listener.onError(error)
         );
         getRequestQueue().add(request);
     }
 
-    public class UserResponseListener implements Response.Listener<JSONObject> {
-        private ResponseListener listener;
-
-        public UserResponseListener(ResponseListener listener) {
-            this.listener = listener;
-        }
-
-        @Override
-        public void onResponse(JSONObject response) {
-            try {
-                listener.onRes(toUser(response));
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
+    public void logout() {
+        currentUser = null;
     }
 
     public class UserListResponseListener implements Response.Listener<JSONArray> {
