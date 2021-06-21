@@ -40,8 +40,6 @@ public class MainActivity extends AppCompatActivity implements NavigationHost {
 
         if (boardTeam == null) {
             navigateTo(new TeamsFragment(), false);
-        } else {
-            navigateTo(new TasksFragment(boardTeam), false);
         }
     }
 
