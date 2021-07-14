@@ -27,6 +27,7 @@ import java.util.List;
 
 public class TasksFragment extends Fragment {
     private Team team;
+    private View myView;
 
     public TasksFragment() {
     }
@@ -41,10 +42,29 @@ public class TasksFragment extends Fragment {
     }
 
     @Override
+    public void onStart() {
+        super.onStart();
+        updateView();
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_tasks, container, false);
-        final CircularProgressIndicator progressIndicator = view.findViewById(R.id.tasks_progress_bar);
+        myView = inflater.inflate(R.layout.fragment_tasks, container, false);
+
+        updateView();
+
+        myView.findViewById(R.id.new_task_button).setOnClickListener(view -> {
+            Intent intent = new Intent(getContext(), NewTaskActivity.class);
+            intent.putExtra("teamId", team.getName());
+            startActivity(intent);
+        });
+
+        return myView;
+    }
+
+    private void updateView() {
+        final CircularProgressIndicator progressIndicator = myView.findViewById(R.id.tasks_progress_bar);
 
         UserService.getInstance(getContext()).findAll(new ResponseListener<List<User>>() {
             @Override
@@ -53,7 +73,7 @@ public class TasksFragment extends Fragment {
                 TaskService.getInstance(getContext()).findByTeam(team.getName(), new ResponseListener<List<Task>>() {
                     @Override
                     public void onRes(List<Task> res) {
-                        RecyclerView tasksRV = view.findViewById(R.id.tasks_rc);
+                        RecyclerView tasksRV = myView.findViewById(R.id.tasks_rc);
                         tasksRV.setLayoutManager(new LinearLayoutManager(getContext()));
                         progressIndicator.setVisibility(View.GONE);
                         tasksRV.setAdapter(new TasksAdapter(res, users, new TasksAdapter.onTaskClick() {
@@ -78,16 +98,6 @@ public class TasksFragment extends Fragment {
 
             }
         });
-
-        view.findViewById(R.id.new_task_button).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getContext(), NewTaskActivity.class);
-                intent.putExtra("teamId", team.getName());
-                startActivity(intent);
-            }
-        });
-
-        return view;
     }
 }
+
